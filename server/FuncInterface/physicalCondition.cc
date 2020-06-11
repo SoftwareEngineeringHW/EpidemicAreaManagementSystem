@@ -151,10 +151,8 @@ string viewPhysicalCondition(string date) {
 
     // 2、pageTotal
     int intPageTotal = db.sqlResult.size();
-    //string pageTotalValue = to_string(intPageTotal);
     Value pageTotal;
     pageTotal.SetInt(intPageTotal);
-    //pageTotal.SetString(pageTotalValue.c_str(), allocator);
     jsonResult.jsonDoc.AddMember("pageTotal", pageTotal, allocator);
 
     // 3、info数组
@@ -164,7 +162,16 @@ string viewPhysicalCondition(string date) {
         return jsonResult.genJson(allocator);
     }
     vector<vector<string>> infoData = db.sqlResult;
-    vector<string> infoKey = {"userID", "date", "todayTemperature", "HuBeiContact"};
+    // 3.1 获取姓名
+    for (int i = 0; i < intPageTotal; ++i) {
+        sql = "SELECT userName FROM User WHERE userID = " + infoData[i][0] + ";";
+        if(!db.exeSQL(sql, RETRIEVE)) {
+            return CGenJson::genResultJson(MYSQL_ERR);
+        }
+        infoData[i].push_back(db.sqlResult[0][0]);
+    }
+
+    vector<string> infoKey = {"userID", "date", "todayTemperature", "HuBeiContact", "userName"};
     vector<Value> infoPart(intPageTotal);
     for (int i = 0; i < intPageTotal; ++i) {
         jsonResult.genInsideJson(infoPart[i], infoKey, infoData[i], allocator);
