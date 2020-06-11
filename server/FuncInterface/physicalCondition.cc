@@ -93,14 +93,14 @@ string epidemicSituation() {
     vector<vector<string>> trendDataValue;
     for (int i = 0; i < 4; ++i) {
         vector<string> trendDataValuePart;
-        for (int j = 0; j < 6; ++j) { // 前6天数据
+        for (int j = 0; j < 7; ++j) { // 前7天数据
             sql = "SELECT " + totalKey[i] + " FROM SpecialStateDailyRecord WHERE date = \"" + date7[j] + "\";";
             if(!db.exeSQL(sql, RETRIEVE)) {
                 return CGenJson::genResultJson(MYSQL_ERR);
             }
             trendDataValuePart.push_back(db.sqlResult[0][0]);
         }
-        trendDataValuePart.push_back(totalValue[i]); // 当天数据
+        //trendDataValuePart.push_back(totalValue[i]); // 当天数据
         trendDataValue.push_back(trendDataValuePart);
     }
     // 5.2 生成label

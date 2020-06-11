@@ -75,7 +75,7 @@ string adminRegister(string userID, string userName, string password, string pho
         return CGenJson::genResultJson(BEEN_REGISTER);
     }
 
-    sql = "INSERT INTO Admin VALUES (\"" + userID + "\", \"" + userName + "\", \"" + password + "\", " + phone + ", \"" + buildingID + "\");";
+    sql = "INSERT INTO Admin VALUES (\"" + userID + "\", \"" + userName + "\", \"" + password + "\", \"" + phone + "\", \"" + buildingID + "\");";
     
     if(!db.exeSQL(sql, CREATE)) { // 注册信息插入mysql失败
         return CGenJson::genResultJson(MYSQL_ERR);
