@@ -313,13 +313,16 @@ string SetUserHealthStat(string userID,string adminID,string status)
                 break;
             }
         }
-        else if(State!=HEALTH && State!=DEAD && atoi(status.c_str())==HEALTH){
+        else if(atoi(status.c_str())==HEALTH || atoi(status.c_str())==DEAD){
             sql="delete from Quarantine where userID=\""+userID+"\"";
             if(!db.exeSQL(sql,DELETE)) { 
                 Value.SetInt(MYSQL_ERR);
                 jsonDoc.AddMember(Key,Value,allocator); 
                 break;
             }
+        }
+        else if(atoi(status.c_str())==DEAD){
+            
         }
         Value.SetInt(SUCCESS);
         jsonDoc.AddMember(Key,Value,allocator); 
