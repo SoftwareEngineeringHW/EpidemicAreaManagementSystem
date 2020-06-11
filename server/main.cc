@@ -294,6 +294,7 @@ int main(int argc,char **argv) {
   svr.Post("/HealthStateChange", [](const Request & req, Response &res) {
     Document doc;
     ParseResult pRes=doc.Parse(req.body.c_str());
+    cout<<req.body<<endl;
     vector<string> param = {"userID", "adminID", "state"};
     if(pRes && isParamValid(param, &doc)){
       string result = SetUserHealthStat(doc["userID"].GetString(), doc["adminID"].GetString(),doc["state"].GetString());

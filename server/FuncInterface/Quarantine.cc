@@ -6,6 +6,9 @@
 #define USER "user"
 #define ADMIN_ID 0
 #define USER_ID 1
+#define HEALTH 1 
+#define DEAD 5
+//1=健康、2=隔离、3=疑似、4=确诊、5=死亡  
 string GetQuarantineInfo(string type,string id)
 {
     MyDB db;
@@ -276,9 +279,47 @@ string SetUserHealthStat(string userID,string adminID,string status)
             jsonDoc.AddMember(Key,Value,allocator); 
             break;
         }
-        string sql="update User set state=\""+status+"\" where userID=\""+userID+"\"";
-        if(!db.exeSQL(sql,UPDATE)) { 
+        string sql="select state from User where userID=\""+userID+"\"";
+        if(!db.exeSQL(sql,RETRIEVE) || db.sqlResult.empty() || db.sqlResult[0].size()!=1) { 
+            Value.SetInt(MYSQL_ERR);
+            jsonDoc.AddMember(Key,Value,allocator); 
             break;
+        }
+        int State=atoi(db.sqlResult[0][0].c_str());
+        cout<<State<<endl;
+        sql="update User set state=\""+status+"\" where userID=\""+userID+"\"";
+        if(!db.exeSQL(sql,UPDATE)) { 
+            Value.SetInt(MYSQL_ERR);
+            jsonDoc.AddMember(Key,Value,allocator); 
+            break;
+        }
+        if(State==HEALTH && atoi(status.c_str())!=HEALTH && atoi(status.c_str())!=DEAD ){
+            char BeginDate[20],EndDate[20];
+            time_t NowTimeStamp;
+            struct tm * TimeInfo;
+            time(&NowTimeStamp);
+            TimeInfo=localtime(&NowTimeStamp);
+            strftime(BeginDate,sizeof(BeginDate),"%Y-%m-%d",TimeInfo);
+            NowTimeStamp+=14*86400;
+            TimeInfo=localtime(&NowTimeStamp);
+            strftime(EndDate,sizeof(EndDate),"%Y-%m-%d",TimeInfo); 
+            cout<<EndDate<<endl;
+            string BeginTime(BeginDate),EndTime(EndDate);
+            sql="insert into Quarantine values(\""+userID+"\",\""+BeginTime+"\",\""+EndTime+"\")";
+            cout<<sql<<endl;
+            if(!db.exeSQL(sql,CREATE)) { 
+                Value.SetInt(MYSQL_ERR);
+                jsonDoc.AddMember(Key,Value,allocator); 
+                break;
+            }
+        }
+        else if(State!=HEALTH && State!=DEAD && atoi(status.c_str())==HEALTH){
+            sql="delete from Quarantine where userID=\""+userID+"\"";
+            if(!db.exeSQL(sql,DELETE)) { 
+                Value.SetInt(MYSQL_ERR);
+                jsonDoc.AddMember(Key,Value,allocator); 
+                break;
+            }
         }
         Value.SetInt(SUCCESS);
         jsonDoc.AddMember(Key,Value,allocator); 
