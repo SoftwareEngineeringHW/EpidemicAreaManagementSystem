@@ -1,10 +1,10 @@
 include_directories(${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/cpp-httplib-master/out ${PROJECT_SOURCE_DIR}/server)
 set(SERVER_SRC 
-    main.cc 
+    main.cpp
     myDB.cc 
-    genJson.cpp
-    helpFunc.cpp
-    httplib.cc 
+    genJson.cc
+    helpFunc.cc
+    httplib.cpp 
     FuncInterface/login+register.cc 
     FuncInterface/announcement.cc
     FuncInterface/familyManagement.cc
