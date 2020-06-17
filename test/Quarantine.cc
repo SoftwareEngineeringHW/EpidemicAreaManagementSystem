@@ -4,6 +4,7 @@
 #include "interface.h"
 #include "UnitTestCommon.h"
 #include <gtest/gtest.h>
+#include<unordered_map>
 using namespace testing;
 const string GetQuarantineInfoSuccess="{\"family\":{\"familyID\":\"2\",\"unit\":\"1\",\"Quarantine\":\"0\"},\"result\":0,\"membersList\":[{\"userId\":\"650104000000001111\",\"name\":\"白小龙\"},{\"userId\":\"650104000000001112\",\"name\":\"王俊凯\"},{\"userId\":\"650104000000003333\",\"name\":\"白小骨\"}]}";
 const string GetQuarantineInfoNoRegister="{\"result\":1001}";
@@ -29,4 +30,27 @@ TEST(TestCase,GenJsonLinearArray){
         jsonDoc.Accept(Writer);
         EXPECT_EQ(ResBuffer.GetString(),Result[i]);
     }    
+}
+/*TEST(TestCase,GenJsonObjectArray){
+
+}*/
+TEST(TestCase,GenJsonObjectWithObjectValue){
+    unordered_map<string,string>[3] KeyValues;
+    KeyValues[0]["id"]="1";
+    KeyValues[0]["type"]="2";
+    KeyValues[0]["list"]="3";
+    KeyValues[2]["id"]="2";
+    KeyValues[2]["time"]="233";
+    vector<string> LinearArrayName={"test","test1",""};
+    vector<string> Result={"{\"test\":{\"id\":\"1\",\"type\":\"2\",\"list\":\"3\"}","{}","{}"};
+    for(int i=0;i<3;++i){
+        Document jsonDoc;
+        jsonDoc.SetObject();
+        Document::AllocatorType& allocator = jsonDoc.GetAllocator();
+        StringBuffer ResBuffer;
+        Writer<StringBuffer> Writer(ResBuffer);
+        GenJsonObjectWithObjectValue(LinearArrayName[i],KeyValues[i],jsonDoc);
+        jsonDoc.Accept(Writer);
+        EXPECT_EQ(ResBuffer.GetString(),Result[i]);
+    }
 }
