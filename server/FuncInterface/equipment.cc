@@ -32,6 +32,11 @@ string newEquipment(string equipmentName, string storage) {
 string modifyEquipment(string equipmentID, string storageChange) {
     MyDB db;
 
+    // 判断storageChange格式合法性
+    if (storageChange.empty() || (storageChange[0] != '+' && storageChange[0] != '-')){
+        return CGenJson::genResultJson(MYSQL_ERR);
+    }
+
     // 先判断该ID是否已经注册过，顺便获取目标物资存量
     string sql = "SELECT storage FROM EquipmentStorage WHERE equipmentID = \"" + equipmentID + "\" LIMIT 1;";
 	if(!db.exeSQL(sql, RETRIEVE)) {
