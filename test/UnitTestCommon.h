@@ -25,12 +25,12 @@
 #define GETAPPLYSTATUS_ALL        "3"
 #define GETAPPLYSTATUS_ERR        "4"
 
-#define MYSQL_HEAL                "SELECT * FROM User WHERE userID = '650104000000001111';"
-#define MYSQL_ERR                 "SELECT * FROM User WHERE userID = '650104000000001111' || 't'='t';"
+#define CORRECT_MYSQL             "SELECT * FROM User WHERE userID = '650104000000001111';"
+#define ERR_MYSQL                 "SELECT * FROM User WHERE userID = '650104000000001111' || 't'='t';"
 
 
 // 单元测试结果
-#define SUCCESS             "{\"result\":\"0\"}"
+#define SUCCESS_JSON        "{\"result\":\"0\"}"
 
 #define REG_ID_ERR          "{\"result\":\"1000\"}"
 
