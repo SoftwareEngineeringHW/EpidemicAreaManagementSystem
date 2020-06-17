@@ -303,10 +303,8 @@ string SetUserHealthStat(string userID,string adminID,string status)
             NowTimeStamp+=14*86400;
             TimeInfo=localtime(&NowTimeStamp);
             strftime(EndDate,sizeof(EndDate),"%Y-%m-%d",TimeInfo); 
-            cout<<EndDate<<endl;
             string BeginTime(BeginDate),EndTime(EndDate);
             sql="insert into Quarantine values(\""+userID+"\",\""+BeginTime+"\",\""+EndTime+"\")";
-            cout<<sql<<endl;
             if(!db.exeSQL(sql,CREATE)) { 
                 Value.SetInt(MYSQL_ERR);
                 jsonDoc.AddMember(Key,Value,allocator); 
@@ -328,6 +326,5 @@ string SetUserHealthStat(string userID,string adminID,string status)
         jsonDoc.AddMember(Key,Value,allocator); 
     }while(false);
     jsonDoc.Accept(Writer);
-    cout<<ResBuffer.GetString()<<endl;
     return ResBuffer.GetString();
 }
