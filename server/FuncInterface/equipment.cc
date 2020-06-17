@@ -167,9 +167,8 @@ string handleApplication(string applyID, string result, string adminID, string r
 
     return CGenJson::genResultJson(SUCCESS);
 }
-//select * from EquipmentStorage
-string getAllEquipment()
-{
+
+string getAllEquipment() {
     MyDB db;
     Document jsonDoc;
     jsonDoc.SetObject();
@@ -210,8 +209,8 @@ string getAllEquipment()
     jsonDoc.Accept(Writer);
     return ResBuffer.GetString();
 }
-string getApplyEquipment(string userID,string type)
-{
+
+string getApplyEquipment(string userID,string type) {
     MyDB db;
     Document jsonDoc;
     jsonDoc.SetObject();

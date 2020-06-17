@@ -21,10 +21,4 @@
 #define NOT_ENOUGH          1007 // 物资不足
 #define INVALID_REQ         1008 //不合法的请求
 
-
-#include<iostream>
-#include<string>
-#include<vector>
-#include<map>
-
 #endif

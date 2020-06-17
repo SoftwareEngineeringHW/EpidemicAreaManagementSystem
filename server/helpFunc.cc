@@ -2,7 +2,7 @@
 
 // 检查SQL语句是否被注入
 bool CheckSQL(string sql) {
-    string key[9] = { "%","/","union","|","&","^" ,"#","/*","*/"};
+    string key[9] = { "%","/","union","||","&","^" ,"#","/*","*/"};
     for (int i = 0; i < 9; i++) {
         if (sql.find(key[i]) != string::npos) {
             return false;
@@ -40,7 +40,8 @@ vector<string> stringCut(string str, string cut) {
 	return result;
 }
 
-vector<string> get7date() { // 获取今天及前6天的日期，递增
+// 获取今天及前7天的日期，递增
+vector<string> get7date() { 
     vector<string> result;
     time_t rawtime;
     struct tm * timeinfo;
