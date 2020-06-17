@@ -38,7 +38,7 @@
 #define LOGIN_ID_ERR        "{\"result\":\"1001\"}"
 #define LOGIN_PW_ERR        "{\"result\":\"1002\"}"
 
-#define MODIFY_EQUIP_ID_ERR "{\"result\":\"1000\"}"
+#define MODIFY_EQUIPID_ERR "{\"result\":\"1000\"}"
 #define MODIFY_EQUIP_LACK   "{\"result\":\"1007\"}"
 #define MODIFY_EQUIP_ERR    "{\"result\":\"-2\"}"
 

@@ -43,7 +43,7 @@ TEST(testCase, test_getApplyStatus) {
     EXPECT_EQ(getApplyEquipment(LOGIN_USER_ID_ERR, GETAPPLYSTATUS_REJE), SUCCESS_JSON); // 用户ID未注册
     EXPECT_EQ(getApplyEquipment(LOGIN_USER_ID, GETAPPLYSTATUS_REJE), SUCCESS_JSON); // 查询被拒绝的物资申请
     EXPECT_EQ(getApplyEquipment(LOGIN_USER_ID, GETAPPLYSTATUS_AGGE), SUCCESS_JSON); // 查询被通过的物资申请
-    EXPECT_EQ(getApplyEquipment(LOGIN_USER_ID, GETAPPLYSTATUS_WAIT), MODIFY_EQUIP_ID_ERR); // 查询未处理的物资申请
+    EXPECT_EQ(getApplyEquipment(LOGIN_USER_ID, GETAPPLYSTATUS_WAIT), MODIFY_EQUIPID_ERR); // 查询未处理的物资申请
     EXPECT_EQ(getApplyEquipment(LOGIN_USER_ID, GETAPPLYSTATUS_ALL), MODIFY_EQUIP_LACK); //查询所有物资申请
     EXPECT_EQ(getApplyEquipment(LOGIN_USER_ID, GETAPPLYSTATUS_ERR), MODIFY_EQUIP_ERR); // 不合法的请求
 }
